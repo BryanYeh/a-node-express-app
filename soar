@@ -1,0 +1,29 @@
+#!/bin/bash
+
+path=$(printf '%s\n' "${PWD##*/}")
+
+# get env variables from .env
+source .env
+
+# get first arg
+arg1=$1
+
+if [[ $arg1 == "up" ]]; then
+    command="docker-compose up -d"
+    $command
+elif [[ $arg1 == "down" ]]; then
+    command="docker-compose down"
+    $command
+else
+    # remove first arg
+    shift
+
+    # get rest of args
+    argrest=$@
+
+    # web is the service name in docker-compose.yml
+    command="docker exec $(docker ps -q -f name=web) $arg1 "$argrest""
+
+    # run the command
+    $command
+fi
