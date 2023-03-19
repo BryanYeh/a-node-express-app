@@ -22,7 +22,7 @@ else
     argrest=$@
 
     # web is the service name in docker-compose.yml
-    command="docker exec $(docker ps -q -f name=web) $arg1 "$argrest""
+    command="docker-compose exec web $arg1 "$argrest""
 
     # run the command
     $command
