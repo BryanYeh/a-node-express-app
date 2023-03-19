@@ -4,7 +4,6 @@ services:
     build:
       context: .
     env_file: ./.env
-    command: npm run dev
     volumes:
       - ./:/app/
       - node_modules:/app/node_modules
@@ -14,6 +13,7 @@ services:
       - db
     networks:
       - nodeapp
+    tty: true
   db:
     image: mysql:latest
     env_file: ./.env
