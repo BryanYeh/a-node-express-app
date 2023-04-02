@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
-const logger = require('./helpers/logger')
+const { ServerError } = require('./exceptions/ServerError')
 
 const errorHandler = require('./middlewares/errorHandler.middleware.js')
 
@@ -14,30 +14,12 @@ const HOST = '0.0.0.0'
 app.get('/', async (req, res, next) => {
     // res.send('Hello World!')
     try {
-        let error = new Error('try again')
-        error.statusCode = 500
-        throw error
+        res.send('hello')
+        throw new ServerError()
     } catch (error) {
         return next(error)
     }
 })
-
-    // Cause an error
-    app.get('/error', async (req, res, next) => {
-        try {
-            let error = new Error('This is a major issue!!')
-            error.statusCode = 500
-            throw error
-        } catch (error) {
-            return next(error)
-        }
-    })
-
-    // Just logging
-    app.get('/log', async (req, res, next) => {
-        logger.info('hello from /log')
-        res.send('hello')
-    })
 
 app.use(errorHandler.logger)
 app.use(errorHandler.responder)
