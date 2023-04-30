@@ -14,7 +14,7 @@ const HOST = '0.0.0.0'
 app.get('/', async (req, res, next) => {
     // res.send('Hello World!')
     try {
-        res.send('hello')
+        // res.send('hello')
         throw new ServerError()
     } catch (error) {
         return next(error)
