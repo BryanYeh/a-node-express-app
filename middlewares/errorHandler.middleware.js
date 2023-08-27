@@ -8,7 +8,11 @@ const errorHandler = {
 
     responder: (error, request, response, next) => {
         const status = error.statusCode || 500
-        return response.status(status).send(error.message)
+        return response.status(status).render('errors/' + status, {
+            layout: 'main',
+            status: status,
+            message: error.message
+        })
     }
 }
 module.exports = errorHandler;
